@@ -25,8 +25,12 @@ level_data_test = {'level_map': level_map, 'level_entities': level_entities}
 
 
 class Level:
-    def __init__(self, level_data, surface):
+    def __init__(self, level_data: dict, surface: pg.Surface):
         self.display_surface = surface
+        self.down_inputs = []
+        self.up_inputs = []
+        self.hold_inputs = []
+        self.inputs = []
 
         self.tiles = pg.sprite.Group()
         self.player = pg.sprite.GroupSingle()
@@ -47,14 +51,38 @@ class Level:
 
         self.camera = CameraGroup(player=self.player, display_surface=self.display_surface)
 
-    def run(self):
+    def update_inputs(self, events: list[pg.event.Event]):
+        # clear inputs
+        self.down_inputs = []
+        self.up_inputs = []
+        self.hold_inputs = []
+
+        # update tap inputs
+        for event in events:
+            if event.type == pg.KEYDOWN:
+                print('down')
+                self.down_inputs.append(event.key)
+            if event.type == pg.KEYUP:
+                print('up')
+                self.up_inputs.append(event.key)
+
+        # update hold inputs
+        keys = pg.key.get_pressed()
+        if keys[pg.K_a]:
+            print("Key held down: a")
+            self.hold_inputs = keys
+
+        self.inputs = [self.down_inputs, self.up_inputs, self.hold_inputs]
+
+    def run(self, events: list[pg.event.Event]):
+        # update inputs
+        self.update_inputs(events)
+
         # tiles update
         self.tiles.update()
-        # self.tiles.draw(self.display_surface)
 
         # player update
-        self.player.update()
-        # self.player.draw(self.display_surface)
+        self.player.update(self.inputs)
 
         # draw
         self.camera.add(self.tiles)

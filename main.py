@@ -19,27 +19,12 @@ if __name__ == '__main__':
     clock = pg.time.Clock()
 
     # levels
-    level_map = [
-        '                            ',
-        'XXXX                        ',
-        '                            ',
-        '               XXXXXX       ',
-        '     XXXX        XXX        ',
-        'XX         X                ',
-        'XXXXX      X                ',
-        '    XX     X                ',
-        '         XXX   XX           ',
-        '     XXXXXXX   XX     XX    ',
-        'XXXXXXXXXXXX   XXXXXXXXX XXX',
-    ]
-    level_entities = [{'type': 'player', 'pos': (0, 0)}]
-    level_data_test = {'level_map': level_map, 'level_entities': level_entities}
-
     level = Level(level_data_test, screen)
 
     # main loop
     while True:
-        for event in pg.event.get():
+        events = pg.event.get()
+        for event in events:
             if event.type == pg.QUIT:
                 pg.quit()
                 exit()
@@ -48,7 +33,7 @@ if __name__ == '__main__':
         screen.fill('black')
 
         # level
-        level.run()
+        level.run(events)
 
         # update
         pg.display.update()

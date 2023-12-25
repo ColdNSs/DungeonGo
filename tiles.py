@@ -11,7 +11,7 @@ tiles_dic = {'test_grey': test_grey, 'test_white': test_white, 'marisad': marisa
 
 
 class Tile(pg.sprite.Sprite):
-    def __init__(self, mat: str, pos=(0, 0), size=100):
+    def __init__(self, mat: str, pos: tuple = (0, 0), size: int = 100):
         super().__init__()
         self.image = pg.Surface((size, size))
         self.rect = self.image.get_rect(topleft=pos)
