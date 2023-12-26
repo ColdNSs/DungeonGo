@@ -41,7 +41,10 @@ class Level:
                 y = row_index * tile_size
 
                 if cell == 'X':
-                    tile = Tile('test_grey', (x, y), tile_size)
+                    if (col_index + row_index) % 2 == 0:
+                        tile = Tile('test_grey', (x, y), tile_size)
+                    else:
+                        tile = Tile('test_white', (x, y), tile_size)
                     self.tiles.add(tile)
 
         for entity in level_data['level_entities']:
@@ -55,23 +58,18 @@ class Level:
         # clear inputs
         self.down_inputs = []
         self.up_inputs = []
-        self.hold_inputs = []
+        # self.hold_inputs = []
 
         # update tap inputs
         for event in events:
             if event.type == pg.KEYDOWN:
-                print('down')
                 self.down_inputs.append(event.key)
             if event.type == pg.KEYUP:
-                print('up')
                 self.up_inputs.append(event.key)
 
         # update hold inputs
         keys = pg.key.get_pressed()
-        if keys[pg.K_a]:
-            print("Key held down: a")
-            self.hold_inputs = keys
-
+        self.hold_inputs = keys
         self.inputs = [self.down_inputs, self.up_inputs, self.hold_inputs]
 
     def run(self, events: list[pg.event.Event]):

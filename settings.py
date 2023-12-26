@@ -14,8 +14,8 @@ level_map = [
     'XXXXX      X                ',
     '    XX     X                ',
     '         XXX   XX           ',
-    '     XXXXXXX   XX     XX    ',
-    'XXXXXXXXXXXX   XXXXXXXXX XXX',
+    '                      XX    ',
+    'XXXXXXXXXXXXXXXXXXXXXXXX XXX',
 ]
 level_entities = [{'type': 'player', 'pos': (0, 0)}]
 level_data_test = {'level_map': level_map, 'level_entities': level_entities}
